@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Your All-in-One Smart Clock App. Digital and Analog Clock, Stopwatch and Timer in One App">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <link rel="icon" href="/favicon.0f1069a7.png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.cd955c7e.png">
+    <link rel="manifest" href="/manifest.webmanifest">
+
+    <link rel="stylesheet" href="/index.ee7f3cbd.css">
+    <link rel="stylesheet" href="/index.0d7e652d.css">
+
+    <title>WiseClock</title>
+
+    <script defer="" src="/index.e37f48ea.js"></script>
+    <!-- <script defer type="module" src="js/script.js"></script> -->
+
+    <!-- <script
+      type="module"
+      defer
+      src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script
+      nomodule
+      defer
+      src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script> -->
+  </head>
+  <body>
+    <h1 class="heading-primary">WiseClock</h1>
+
+    <main class="modes">
+      <section class="modes__clock mode">
+        <div class="modes__clock-type modes__clock-type--analog">
+          <div class="face">
+            <div class="middle"></div>
+            <div class="hour-hand"></div>
+            <div class="minute-hand"></div>
+            <div class="second-hand"></div>
+
+            <p class="number number--3">3</p>
+            <p class="number number--6">6</p>
+            <p class="number number--9">9</p>
+            <p class="number number--12">12</p>
+          </div>
+        </div>
+
+        <div class="modes__clock-type modes__clock-type--digital hidden">
+          00:00:00
+        </div>
+
+        <div class="clock-types">
+          <button class="clock-types__type clock-types__type-analog clock-types__type--active" data-type="analog">
+            Analog
+          </button>
+          <button class="clock-types__type clock-types__type-digital" data-type="digital">
+            Digital
+          </button>
+        </div>
+      </section>
+
+      <section class="modes__stopwatch mode hidden">
+        <p class="modes__stopwatch-time">
+          <span class="stopwatch-minutes">00</span>:<span class="stopwatch-seconds">00</span>.<span class="stopwatch-100th-seconds">00</span>
+        </p>
+        <div class="modes__btns modes__stopwatch-btns">
+          <button class="modes__btn modes__stopwatch-btn modes__btn--start modes__stopwatch-btn--start">
+            <!-- <ion-icon
+              name="play"
+              class="modes__icon modes__stopwatch-icon modes__icon--play modes__stopwatch-icon--play"></ion-icon> -->
+            <span class="modes__icon modes__stopwatch-icon modes__icon--play modes__stopwatch-icon--play">
+              ▶
+            </span>
+            <!-- <ion-icon
+              name="pause-outline"
+              class="modes__icon modes__stopwatch-icon modes__icon--pause modes__stopwatch-icon--pause hidden"></ion-icon> -->
+            <span class="modes__icon modes__stopwatch-icon modes__icon--pause modes__stopwatch-icon--pause hidden">
+              ⏸
+            </span>
+          </button>
+
+          <button class="modes__btn modes__stopwatch-btn modes__btn--stop modes__stopwatch-btn--stop">
+            <!-- <ion-icon
+              name="stop"
+              class="modes__icon modes__stopwatch-icon"></ion-icon> -->
+            <span class="modes__icon modes__stopwatch-icon"> ⏹ </span>
+          </button>
+        </div>
+      </section>
+
+      <section class="modes__timer mode hidden">
+        <form class="form">
+          <div class="form__inputs hidden">
+            <div>
+              <input placeholder="00" type="number" class="form__input form__input--hours">
+            </div>
+            <div>
+              <input placeholder="00" type="number" class="form__input form__input--minutes">
+            </div>
+            <div>
+              <input placeholder="00" type="number" class="form__input form__input--seconds">
+            </div>
+          </div>
+
+          <div class="modes__timer-time">
+            <span class="timer-time__hours">00</span>:<span class="timer-time__minutes">00</span>:<span class="timer-time__seconds">00</span>
+          </div>
+        </form>
+
+        <div class="modes__btns modes__timer-btns">
+          <button class="modes__btn modes__timer-btn modes__btn--start modes__timer-btn--start">
+            <ion-icon name="play" class="modes__icon modes__timer-icon modes__icon--play modes__timer-icon--play"></ion-icon>
+            <ion-icon name="pause-outline" class="modes__icon modes__timer-icon modes__icon--pause modes__timer-icon--pause hidden"></ion-icon>
+          </button>
+
+          <button class="modes__btn modes__timer-btn modes__btn--stop modes__timer-btn--stop">
+            <ion-icon name="stop" class="modes__icon modes__timer-icon"></ion-icon>
+          </button>
+        </div>
+      </section>
+    </main>
+
+    <div class="btns">
+      <button class="btns__btn btns__btn--clock btns__btn--active" data-mode="clock">
+        <!-- <ion-icon name="time-outline" class="btns__btn-icon"></ion-icon> -->
+        🕒
+      </button>
+      <button class="btns__btn btns__btn--stopwatch" data-mode="stopwatch">
+        <!-- <ion-icon name="stopwatch-outline" class="btns__btn-icon"></ion-icon> -->
+        ⏱
+      </button>
+      <button class="btns__btn btns__btn--timer" data-mode="timer">
+        <!-- <ion-icon name="timer-outline" class="btns__btn-icon"></ion-icon> -->
+        ⏲
+      </button>
+    </div>
+  </body>
+</html>

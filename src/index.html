@@ -23,8 +23,17 @@
 
     <title>WiseClock</title>
 
-    <script src="https://unpkg.com/phosphor-icons"></script>
-    <script defer src="js/script.js"></script>
+    <script defer type="module" src="js/controller.js"></script>
+    <!-- <script defer type="module" src="js/script.js"></script> -->
+
+    <!-- <script
+      type="module"
+      defer
+      src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script
+      nomodule
+      defer
+      src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script> -->
   </head>
   <body>
     <h1 class="heading-primary">WiseClock</h1>
@@ -73,19 +82,28 @@
         <div class="modes__btns modes__stopwatch-btns">
           <button
             class="modes__btn modes__stopwatch-btn modes__btn--start modes__stopwatch-btn--start">
-            <ion-icon
+            <!-- <ion-icon
               name="play"
-              class="modes__icon modes__stopwatch-icon modes__icon--play modes__stopwatch-icon--play"></ion-icon>
-            <ion-icon
+              class="modes__icon modes__stopwatch-icon modes__icon--play modes__stopwatch-icon--play"></ion-icon> -->
+            <span
+              class="modes__icon modes__stopwatch-icon modes__icon--play modes__stopwatch-icon--play">
+              ▶
+            </span>
+            <!-- <ion-icon
               name="pause-outline"
-              class="modes__icon modes__stopwatch-icon modes__icon--pause modes__stopwatch-icon--pause hidden"></ion-icon>
+              class="modes__icon modes__stopwatch-icon modes__icon--pause modes__stopwatch-icon--pause hidden"></ion-icon> -->
+            <span
+              class="modes__icon modes__stopwatch-icon modes__icon--pause modes__stopwatch-icon--pause hidden">
+              ⏸
+            </span>
           </button>
 
           <button
             class="modes__btn modes__stopwatch-btn modes__btn--stop modes__stopwatch-btn--stop">
-            <ion-icon
+            <!-- <ion-icon
               name="stop"
-              class="modes__icon modes__stopwatch-icon"></ion-icon>
+              class="modes__icon modes__stopwatch-icon"></ion-icon> -->
+            <span class="modes__icon modes__stopwatch-icon"> ⏹ </span>
           </button>
         </div>
       </section>
@@ -146,22 +164,17 @@
       <button
         class="btns__btn btns__btn--clock btns__btn--active"
         data-mode="clock">
-        <ion-icon name="time-outline" class="btns__btn-icon"></ion-icon>
+        <!-- <ion-icon name="time-outline" class="btns__btn-icon"></ion-icon> -->
+        🕒
       </button>
       <button class="btns__btn btns__btn--stopwatch" data-mode="stopwatch">
-        <ion-icon name="stopwatch-outline" class="btns__btn-icon"></ion-icon>
+        <!-- <ion-icon name="stopwatch-outline" class="btns__btn-icon"></ion-icon> -->
+        ⏱
       </button>
       <button class="btns__btn btns__btn--timer" data-mode="timer">
-        <!-- <ion-icon name="hourglass-outline" class="btns__btn-icon"></ion-icon> -->
-        <i class="ph-hourglass-simple btns__btn-icon"></i>
+        <!-- <ion-icon name="timer-outline" class="btns__btn-icon"></ion-icon> -->
+        ⏲
       </button>
     </div>
-
-    <script
-      type="module"
-      src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-    <script
-      nomodule
-      src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
   </body>
 </html>

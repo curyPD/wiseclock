@@ -1,0 +1,25 @@
+{
+  "name": "wiseclock",
+  "version": "1.0.0",
+  "description": "",
+  "default": "src/index.html",
+  "scripts": {
+    "start": "parcel src/index.html",
+    "build": "parcel build src/index.html --dist-dir dist"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/curyPD/wiseclock.git"
+  },
+  "author": "curypd",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/curyPD/wiseclock/issues"
+  },
+  "homepage": "https://github.com/curyPD/wiseclock#readme",
+  "devDependencies": {
+    "@parcel/packager-raw-url": "^2.6.0",
+    "@parcel/transformer-webmanifest": "^2.6.0",
+    "parcel": "^2.6.0"
+  }
+}
