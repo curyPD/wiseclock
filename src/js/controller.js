@@ -1,6 +1,9 @@
 import * as clockView from './views/clockView.js';
 import * as btnsView from './views/btnsView.js';
 import * as stopwatchView from './views/stopwatchView.js';
+import * as timerView from './views/timerView.js';
+import { calculateTotalTime } from './helpers.js';
+import { renderTimerPopup } from './views/popupView.js';
 import * as model from './model.js';
 
 const controlSwitchClockMode = function (e) {
@@ -26,7 +29,7 @@ const controlBtnClick = function (e) {
   btnsView.changeActiveBtn(btn);
 };
 
-const controlStartStopwatch = function (e) {
+const controlStartStopwatch = function () {
   if (!model.state.stopwatchRunning) {
     model.state.stopwatch = stopwatchView.runStopwatch(model.state);
     model.state.stopwatchRunning = true;
@@ -38,7 +41,7 @@ const controlStartStopwatch = function (e) {
   stopwatchView.switchStartBtnIcons();
 };
 
-const controlStopStopwatch = function (e) {
+const controlStopStopwatch = function () {
   clearInterval(model.state.stopwatch);
   model.state.stopwatch = undefined;
   model.state.stopwatchRunning = false;
@@ -48,6 +51,74 @@ const controlStopStopwatch = function (e) {
   stopwatchView.stopStopwatchVisually();
 };
 
+const controlTimerClick = function () {
+  if (model.state.timerRunning) return;
+  timerView.switchInputsWithTimer('timer');
+};
+
+const controlStartTimer = function (e) {
+  if (
+    !timerView.inputH.value &&
+    !timerView.inputM.value &&
+    !timerView.inputS.value
+  ) {
+    timerView.switchInputsWithTimer('inputs', model.state.timerRunningTime);
+    model.stopTimer();
+    model.state.timerRunningTime = 0;
+    return;
+  }
+  if (!model.state.timer && !model.state.timerRunning) {
+    const totalTime = calculateTotalTime(
+      +timerView.inputH.value,
+      +timerView.inputM.value,
+      +timerView.inputS.value
+    );
+    model.state.timerInitialTime = model.state.timerRunningTime = totalTime;
+    timerView.switchInputsWithTimer('inputs', totalTime);
+    timerView.switchStartBtnIcons();
+    runTimer();
+    model.state.timerRunning = true;
+    return;
+  }
+  if (model.state.timer && model.state.timerRunning) {
+    clearInterval(model.state.timer);
+    timerView.switchStartBtnIcons();
+    model.state.timer = undefined;
+    return;
+  }
+  if (!model.state.timer && model.state.timerRunning) {
+    runTimer(false);
+    timerView.switchStartBtnIcons();
+    return;
+  }
+};
+
+const controlStopTimer = function () {
+  if (!model.state.timer && !model.state.timerRunning) return;
+  clearInterval(model.state.timer);
+  timerView.switchStartBtnIcons('play');
+  model.state.timer = undefined;
+  model.state.timerRunning = false;
+  model.state.timerRunningTime = 0;
+  timerView.switchInputsWithTimer('timer', model.state.timerInitialTime);
+};
+
+const runTimer = function (runImmediately = true) {
+  const timer = () => {
+    if (model.state.timerRunningTime === 0) {
+      model.stopTimer();
+      timerView.switchInputsWithTimer('timer', model.state.timerInitialTime);
+      timerView.switchStartBtnIcons('play');
+      renderTimerPopup();
+      return;
+    }
+    timerView.displayTimerTime(model.state.timerRunningTime);
+    --model.state.timerRunningTime;
+  };
+  runImmediately && timer();
+  model.state.timer = setInterval(timer, 1000);
+};
+
 const init = function (epicPhrase) {
   clockView.analogClock();
   clockView.digitalClock();
@@ -55,6 +126,10 @@ const init = function (epicPhrase) {
   btnsView.addHandlerBtnClick(controlBtnClick);
   stopwatchView.addHandlerStartStopwatch(controlStartStopwatch);
   stopwatchView.addHandlerStopStopwatch(controlStopStopwatch);
+  timerView.addHandlerTextBtnClick(controlTimerClick);
+  timerView.addHandlerStartBtnClick(controlStartTimer);
+  timerView.addHandlerStopBtnClick(controlStopTimer);
+  timerView.addHandlerCheckInput();
   console.log(epicPhrase);
 };
 

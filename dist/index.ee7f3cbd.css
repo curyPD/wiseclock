@@ -312,7 +312,8 @@ input[type="number"] {
   border-bottom: 2px solid var(--color-grey-light-1);
   color: var(--color-grey-darkest);
   text-align: center;
-  padding: 1.6rem;
+  padding-top: 1.6rem;
+  padding-bottom: 1.6rem;
   font-family: inherit;
   font-size: 6.2rem;
   font-weight: 600;
@@ -349,11 +350,25 @@ input[type="number"] {
 
 @keyframes slideDown {
   from {
+    opacity: 0;
     transform: translate(-50%);
   }
 
   to {
+    opacity: 1;
     transform: translate(-50%, 1.2rem);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 1;
+    transform: translate(-50%, 1.2rem);
+  }
+
+  to {
+    opacity: 0;
+    transform: translate(-50%);
   }
 }
 
@@ -366,13 +381,22 @@ input[type="number"] {
   border-radius: 11px;
   padding: 2.4rem 3.2rem;
   font-weight: 500;
-  animation-name: slideDown;
-  animation-duration: .3s;
   position: absolute;
   top: 0;
   left: 50%;
   transform: translate(-50%, 1.2rem);
   box-shadow: 0 .8rem 1.6rem #0000001a;
+}
+
+.slide-down-animation {
+  animation-name: slideDown;
+  animation-duration: .3s;
+}
+
+.slide-up-animation {
+  animation-name: slideUp;
+  animation-duration: .3s;
+  animation-fill-mode: forwards;
 }
 
 .timer__alert-window-text {

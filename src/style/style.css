@@ -364,7 +364,8 @@ input[type='number'] {
 .form__input {
   display: block;
   width: 100%;
-  padding: 1.6rem;
+  padding-top: 1.6rem;
+  padding-bottom: 1.6rem;
 
   border: none;
   border-bottom: 2px solid var(--color-grey-light-1);
@@ -412,11 +413,25 @@ input[type='number'] {
 @keyframes slideDown {
   from {
     transform: translate(-50%, 0);
+    opacity: 0;
   }
   to {
     transform: translate(-50%, 1.2rem);
+    opacity: 1;
   }
 }
+
+@keyframes slideUp {
+  from {
+    transform: translate(-50%, 1.2rem);
+    opacity: 1;
+  }
+  to {
+    transform: translate(-50%, 0);
+    opacity: 0;
+  }
+}
+
 .timer__alert-window {
   position: absolute;
   top: 0;
@@ -434,9 +449,17 @@ input[type='number'] {
   border-radius: 11px;
 
   z-index: 100;
+}
 
+.slide-down-animation {
   animation-name: slideDown;
   animation-duration: 0.3s;
+}
+
+.slide-up-animation {
+  animation-name: slideUp;
+  animation-duration: 0.3s;
+  animation-fill-mode: forwards;
 }
 
 .timer__alert-window-text {

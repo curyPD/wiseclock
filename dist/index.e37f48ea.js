@@ -506,6 +506,9 @@ function hmrAcceptRun(bundle, id) {
 var _clockViewJs = require("./views/clockView.js");
 var _btnsViewJs = require("./views/btnsView.js");
 var _stopwatchViewJs = require("./views/stopwatchView.js");
+var _timerViewJs = require("./views/timerView.js");
+var _helpersJs = require("./helpers.js");
+var _popupViewJs = require("./views/popupView.js");
 var _modelJs = require("./model.js");
 const controlSwitchClockMode = function(e) {
     const btn = e.target.closest(".clock-types__type");
@@ -527,7 +530,7 @@ const controlBtnClick = function(e) {
     document.querySelector(`.modes__${mode}`).classList.remove("hidden");
     _btnsViewJs.changeActiveBtn(btn);
 };
-const controlStartStopwatch = function(e) {
+const controlStartStopwatch = function() {
     if (!_modelJs.state.stopwatchRunning) {
         _modelJs.state.stopwatch = _stopwatchViewJs.runStopwatch(_modelJs.state);
         _modelJs.state.stopwatchRunning = true;
@@ -538,7 +541,7 @@ const controlStartStopwatch = function(e) {
     }
     _stopwatchViewJs.switchStartBtnIcons();
 };
-const controlStopStopwatch = function(e) {
+const controlStopStopwatch = function() {
     clearInterval(_modelJs.state.stopwatch);
     _modelJs.state.stopwatch = undefined;
     _modelJs.state.stopwatchRunning = false;
@@ -547,6 +550,62 @@ const controlStopStopwatch = function(e) {
     _modelJs.state.stopwatchMins = 0;
     _stopwatchViewJs.stopStopwatchVisually();
 };
+const controlTimerClick = function() {
+    if (_modelJs.state.timerRunning) return;
+    _timerViewJs.switchInputsWithTimer("timer");
+};
+const controlStartTimer = function(e) {
+    if (!_timerViewJs.inputH.value && !_timerViewJs.inputM.value && !_timerViewJs.inputS.value) {
+        _timerViewJs.switchInputsWithTimer("inputs", _modelJs.state.timerRunningTime);
+        _modelJs.stopTimer();
+        _modelJs.state.timerRunningTime = 0;
+        return;
+    }
+    if (!_modelJs.state.timer && !_modelJs.state.timerRunning) {
+        const totalTime = (0, _helpersJs.calculateTotalTime)(+_timerViewJs.inputH.value, +_timerViewJs.inputM.value, +_timerViewJs.inputS.value);
+        _modelJs.state.timerInitialTime = _modelJs.state.timerRunningTime = totalTime;
+        _timerViewJs.switchInputsWithTimer("inputs", totalTime);
+        _timerViewJs.switchStartBtnIcons();
+        runTimer();
+        _modelJs.state.timerRunning = true;
+        return;
+    }
+    if (_modelJs.state.timer && _modelJs.state.timerRunning) {
+        clearInterval(_modelJs.state.timer);
+        _timerViewJs.switchStartBtnIcons();
+        _modelJs.state.timer = undefined;
+        return;
+    }
+    if (!_modelJs.state.timer && _modelJs.state.timerRunning) {
+        runTimer(false);
+        _timerViewJs.switchStartBtnIcons();
+        return;
+    }
+};
+const controlStopTimer = function() {
+    if (!_modelJs.state.timer && !_modelJs.state.timerRunning) return;
+    clearInterval(_modelJs.state.timer);
+    _timerViewJs.switchStartBtnIcons("play");
+    _modelJs.state.timer = undefined;
+    _modelJs.state.timerRunning = false;
+    _modelJs.state.timerRunningTime = 0;
+    _timerViewJs.switchInputsWithTimer("timer", _modelJs.state.timerInitialTime);
+};
+const runTimer = function(runImmediately = true) {
+    const timer = ()=>{
+        if (_modelJs.state.timerRunningTime === 0) {
+            _modelJs.stopTimer();
+            _timerViewJs.switchInputsWithTimer("timer", _modelJs.state.timerInitialTime);
+            _timerViewJs.switchStartBtnIcons("play");
+            (0, _popupViewJs.renderTimerPopup)();
+            return;
+        }
+        _timerViewJs.displayTimerTime(_modelJs.state.timerRunningTime);
+        --_modelJs.state.timerRunningTime;
+    };
+    runImmediately && timer();
+    _modelJs.state.timer = setInterval(timer, 1000);
+};
 const init = function(epicPhrase) {
     _clockViewJs.analogClock();
     _clockViewJs.digitalClock();
@@ -554,11 +613,15 @@ const init = function(epicPhrase) {
     _btnsViewJs.addHandlerBtnClick(controlBtnClick);
     _stopwatchViewJs.addHandlerStartStopwatch(controlStartStopwatch);
     _stopwatchViewJs.addHandlerStopStopwatch(controlStopStopwatch);
+    _timerViewJs.addHandlerTextBtnClick(controlTimerClick);
+    _timerViewJs.addHandlerStartBtnClick(controlStartTimer);
+    _timerViewJs.addHandlerStopBtnClick(controlStopTimer);
+    _timerViewJs.addHandlerCheckInput();
     console.log(epicPhrase);
 };
 init("I CAN F*CKING DO IT! AAAAAAAHHHHH!!!!!");
 
-},{"./views/clockView.js":"ltQkn","./views/btnsView.js":"edVKv","./views/stopwatchView.js":"kyOYi","./model.js":"Y4A21"}],"ltQkn":[function(require,module,exports) {
+},{"./views/clockView.js":"ltQkn","./views/btnsView.js":"edVKv","./views/stopwatchView.js":"kyOYi","./views/timerView.js":"fNwdq","./helpers.js":"hGI1E","./model.js":"Y4A21","./views/popupView.js":"57c0M"}],"ltQkn":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "digitalClockEl", ()=>digitalClockEl);
@@ -709,10 +772,113 @@ const runStopwatch = function(data) {
     return stopwatchInterval;
 };
 
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"fNwdq":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "inputH", ()=>inputH);
+parcelHelpers.export(exports, "inputM", ()=>inputM);
+parcelHelpers.export(exports, "inputS", ()=>inputS);
+parcelHelpers.export(exports, "addHandlerTextBtnClick", ()=>addHandlerTextBtnClick);
+parcelHelpers.export(exports, "switchStartBtnIcons", ()=>switchStartBtnIcons);
+parcelHelpers.export(exports, "switchInputsWithTimer", ()=>switchInputsWithTimer);
+parcelHelpers.export(exports, "addHandlerStartBtnClick", ()=>addHandlerStartBtnClick);
+parcelHelpers.export(exports, "addHandlerStopBtnClick", ()=>addHandlerStopBtnClick);
+parcelHelpers.export(exports, "addHandlerCheckInput", ()=>addHandlerCheckInput);
+parcelHelpers.export(exports, "displayTimerTime", ()=>displayTimerTime);
+var _helpers = require("../helpers");
+const textBtn = document.querySelector(".modes__timer-time");
+const timerHrsEl = document.querySelector(".timer-time__hours");
+const timerMinsEl = document.querySelector(".timer-time__minutes");
+const timerSecsEl = document.querySelector(".timer-time__seconds");
+const formInputs = document.querySelector(".form__inputs");
+const formInputHrsEl = document.querySelector(".form__input--hours");
+const formInputMinsEl = document.querySelector(".form__input--minutes");
+const formInputSecsEl = document.querySelector(".form__input--seconds");
+const btnStart = document.querySelector(".modes__timer-btn--start");
+const btnStop = document.querySelector(".modes__timer-btn--stop");
+const inputH = document.querySelector(".form__input--hours");
+const inputM = document.querySelector(".form__input--minutes");
+const inputS = document.querySelector(".form__input--seconds");
+const addHandlerTextBtnClick = function(handler) {
+    textBtn.addEventListener("click", handler);
+};
+const switchStartBtnIcons = function(icon) {
+    if (!icon) {
+        btnStart.querySelectorAll(".modes__timer-icon").forEach((el)=>el.classList.toggle("hidden"));
+        return;
+    }
+    btnStart.querySelectorAll(".modes__timer-icon").forEach((el)=>el.classList.add("hidden"));
+    btnStart.querySelector(`.modes__timer-icon--${icon}`).classList.remove("hidden");
+};
+const switchInputsWithTimer = function(curMode, timeToDisplay) {
+    if (curMode === "timer") {
+        textBtn.classList.add("hidden");
+        displayTimerTimeInInputs(timeToDisplay);
+        formInputs.classList.remove("hidden");
+    }
+    if (curMode === "inputs") {
+        textBtn.classList.remove("hidden");
+        displayTimerTime(timeToDisplay);
+        formInputs.classList.add("hidden");
+    }
+};
+const addHandlerStartBtnClick = function(handler) {
+    btnStart.addEventListener("click", handler);
+};
+const addHandlerStopBtnClick = function(handler) {
+    btnStop.addEventListener("click", handler);
+};
+const addHandlerCheckInput = function() {
+    formInputs.addEventListener("input", function(e) {
+        const inputEl = e.target.closest(".form__input");
+        if (!inputEl) return;
+        const input = inputEl.value;
+        if (e.data === "+" || e.data === "-") inputEl.value = input.slice(0, input.length - 1);
+        if (!Number.isFinite(+input)) {
+            inputEl.value = "";
+            return;
+        }
+        if (input.length > 2) inputEl.value = input.slice(0, 2);
+    });
+};
+const displayTimerTime = function(time) {
+    const { newHrs , newMins , newSecs  } = (0, _helpers.calculateNewTime)(time);
+    timerHrsEl.textContent = `${newHrs}`.padStart(2, "0");
+    timerMinsEl.textContent = `${newMins}`.padStart(2, "0");
+    timerSecsEl.textContent = `${newSecs}`.padStart(2, "0");
+};
+const displayTimerTimeInInputs = function(time) {
+    const { newHrs , newMins , newSecs  } = (0, _helpers.calculateNewTime)(time);
+    if (!newHrs || !newMins || !newSecs) formInputHrsEl.value = formInputMinsEl.value = formInputSecsEl.value = "";
+    formInputHrsEl.value = newHrs === 0 ? "" : `${newHrs}`.padStart(2, "0");
+    formInputMinsEl.value = newMins === 0 ? "" : `${newMins}`.padStart(2, "0");
+    formInputSecsEl.value = newSecs === 0 ? "" : `${newSecs}`.padStart(2, "0");
+};
+
+},{"../helpers":"hGI1E","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"hGI1E":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "calculateNewTime", ()=>calculateNewTime);
+parcelHelpers.export(exports, "calculateTotalTime", ()=>calculateTotalTime);
+const calculateNewTime = function(time) {
+    const newHrs = Math.floor(time / 3600);
+    const newMins = Math.floor(time % 3600 / 60);
+    const newSecs = time % 3600 % 60;
+    return {
+        newHrs,
+        newMins,
+        newSecs
+    };
+};
+const calculateTotalTime = function(hrs, mins, secs) {
+    return hrs * 3600 + mins * 60 + secs;
+};
+
 },{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"Y4A21":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "state", ()=>state);
+parcelHelpers.export(exports, "stopTimer", ()=>stopTimer);
 const state = {
     curMode: "clock",
     curClockMode: "analog",
@@ -720,7 +886,37 @@ const state = {
     stopwatchRunning: false,
     stopwatchMins: 0,
     stopwatchSecs: 0,
-    stopwatch100Secs: 0
+    stopwatch100Secs: 0,
+    timer: undefined,
+    timerRunning: false,
+    timerInitialTime: 0,
+    timerRunningTime: 0
+};
+const stopTimer = function() {
+    clearInterval(state.timer);
+    state.timerRunning = false;
+    state.timer = undefined;
+};
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"57c0M":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "renderTimerPopup", ()=>renderTimerPopup);
+const renderTimerPopup = function() {
+    const popup = document.createElement("div");
+    popup.classList.add("timer__alert-window", "slide-down-animation");
+    popup.innerHTML = `
+    <p class="timer__alert-window-text">Time's up!</p>
+    <button class="timer__alert-window-btn">OK</button>
+  `;
+    popup.addEventListener("click", function(e) {
+        const btn = e.target.closest(".timer__alert-window-btn");
+        if (!btn) return;
+        this.classList.remove("slide-down-animation");
+        this.classList.add("slide-up-animation");
+        setTimeout(()=>this.remove(), 300);
+    });
+    document.body.append(popup);
 };
 
 },{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["2kSJi","aenu9"], "aenu9", "parcelRequire859b")
