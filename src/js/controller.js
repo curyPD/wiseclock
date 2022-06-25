@@ -3,7 +3,7 @@ import * as btnsView from './views/btnsView.js';
 import * as stopwatchView from './views/stopwatchView.js';
 import * as timerView from './views/timerView.js';
 import { calculateTotalTime } from './helpers.js';
-import { renderTimerPopup } from './views/popupView.js';
+import { renderTimerPopup, hidePopup } from './views/popupView.js';
 import * as model from './model.js';
 
 const controlSwitchClockMode = function (e) {
@@ -58,13 +58,14 @@ const controlTimerClick = function () {
 
 const controlStartTimer = function (e) {
   if (
-    !timerView.inputH.value &&
-    !timerView.inputM.value &&
-    !timerView.inputS.value
+    !Number(timerView.inputH.value) &&
+    !Number(timerView.inputM.value) &&
+    !Number(timerView.inputS.value)
   ) {
     timerView.switchInputsWithTimer('inputs', model.state.timerRunningTime);
     model.stopTimer();
     model.state.timerRunningTime = 0;
+    timerView.textBtn.classList.add('hoverable');
     return;
   }
   if (!model.state.timer && !model.state.timerRunning) {
@@ -77,6 +78,7 @@ const controlStartTimer = function (e) {
     timerView.switchInputsWithTimer('inputs', totalTime);
     timerView.switchStartBtnIcons();
     runTimer();
+    timerView.textBtn.classList.remove('hoverable');
     model.state.timerRunning = true;
     return;
   }
@@ -94,7 +96,11 @@ const controlStartTimer = function (e) {
 };
 
 const controlStopTimer = function () {
-  if (!model.state.timer && !model.state.timerRunning) return;
+  if (!model.state.timer && !model.state.timerRunning) {
+    timerView.switchInputsWithTimer('inputs', model.state.timerRunningTime);
+    timerView.textBtn.classList.add('hoverable');
+    return;
+  }
   clearInterval(model.state.timer);
   timerView.switchStartBtnIcons('play');
   model.state.timer = undefined;
@@ -104,6 +110,8 @@ const controlStopTimer = function () {
 };
 
 const runTimer = function (runImmediately = true) {
+  if (document.querySelector('.timer__alert-window'))
+    hidePopup.call(document.querySelector('.timer__alert-window'));
   const timer = () => {
     if (model.state.timerRunningTime === 0) {
       model.stopTimer();
@@ -119,18 +127,18 @@ const runTimer = function (runImmediately = true) {
   model.state.timer = setInterval(timer, 1000);
 };
 
-const init = function (epicPhrase) {
+const init = function () {
   clockView.analogClock();
   clockView.digitalClock();
   clockView.addHandlerSwitchClockMode(controlSwitchClockMode);
   btnsView.addHandlerBtnClick(controlBtnClick);
+  btnsView.addHandlerHoverBtn();
   stopwatchView.addHandlerStartStopwatch(controlStartStopwatch);
   stopwatchView.addHandlerStopStopwatch(controlStopStopwatch);
   timerView.addHandlerTextBtnClick(controlTimerClick);
   timerView.addHandlerStartBtnClick(controlStartTimer);
   timerView.addHandlerStopBtnClick(controlStopTimer);
   timerView.addHandlerCheckInput();
-  console.log(epicPhrase);
 };
 
-init('I CAN F*CKING DO IT! AAAAAAAHHHHH!!!!!');
+init();

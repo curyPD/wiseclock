@@ -54,7 +54,9 @@ body {
   pointer-events: none;
 }
 
-ion-icon {
+.transparent {
+  opacity: 0;
+  visibility: hidden;
   pointer-events: none;
 }
 
@@ -88,6 +90,7 @@ ion-icon {
   background: none;
   cursor: pointer;
 
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -108,23 +111,45 @@ ion-icon {
   background-color: var(--color-grey-light-2);
 }
 
+.btns__btn-title {
+  position: absolute;
+  top: 50%;
+  left: 110%;
+  transform: translate(0, -50%);
+  font-size: 1.2rem;
+  padding: 4px;
+  background-color: #fff;
+  color: var(--color-grey-dark-1);
+  border: 1px solid var(--color-grey-dark-3);
+  border-radius: 3px;
+  pointer-events: none;
+  transition: all 0.3s;
+}
+
 .btns__btn.btns__btn--active {
   background-color: var(--color-primary-light-2);
 }
 
 .btns__btn-icon {
-  font-size: 4.4rem;
+  width: 4.4rem;
+  height: 4.4rem;
   color: var(--color-grey-dark-2);
+  stroke: var(--color-grey-dark-2);
+  fill: var(--color-grey-dark-2);
 
   transition: all 0.2s;
 }
 
 .btns__btn:hover .btns__btn-icon {
   color: var(--color-grey-dark-1);
+  stroke: var(--color-grey-dark-1);
+  fill: var(--color-grey-dark-1);
 }
 
 .btns__btn.btns__btn--active .btns__btn-icon {
   color: var(--color-primary);
+  stroke: var(--color-primary);
+  fill: var(--color-primary);
 }
 
 /* MODES */
@@ -324,8 +349,12 @@ ion-icon {
 }
 
 .modes__icon {
-  font-size: 3.2rem;
-  color: var(--color-primary-light-1);
+  /* font-size: 3.2rem; */
+  width: 3.2rem;
+  height: 3.2rem;
+  /* color: var(--color-primary-light-1); */
+  fill: var(--color-primary-light-1);
+  stroke: var(--color-primary-light-1);
   transition: all 0.2s;
 }
 
@@ -398,7 +427,7 @@ input[type='number'] {
 }
 
 .hoverable {
-  color: var(--color-grey-dark-3);
+  color: var(--color-grey-dark-2);
   cursor: pointer;
 
   transition: all 0.2s;

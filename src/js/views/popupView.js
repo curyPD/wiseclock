@@ -5,12 +5,14 @@ export const renderTimerPopup = function () {
     <p class="timer__alert-window-text">Time's up!</p>
     <button class="timer__alert-window-btn">OK</button>
   `;
-  popup.addEventListener('click', function (e) {
-    const btn = e.target.closest('.timer__alert-window-btn');
-    if (!btn) return;
-    this.classList.remove('slide-down-animation');
-    this.classList.add('slide-up-animation');
-    setTimeout(() => this.remove(), 300);
-  });
+  popup
+    .querySelector('.timer__alert-window-btn')
+    .addEventListener('click', hidePopup);
   document.body.append(popup);
+};
+
+export const hidePopup = function (e) {
+  this.closest('.timer__alert-window').classList.remove('slide-down-animation');
+  this.closest('.timer__alert-window').classList.add('slide-up-animation');
+  setTimeout(() => this.closest('.timer__alert-window').remove(), 300);
 };

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Your All-in-One Smart Clock App. Digital and Analog Clock, Stopwatch and Timer in One App">
+    <meta name="description" content="Your All-in-One Smart Clock App. Digital and Analog Clock, Stopwatch and Timer in One Place">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
@@ -20,16 +20,6 @@
     <title>WiseClock</title>
 
     <script defer="" src="/index.e37f48ea.js"></script>
-    <!-- <script defer type="module" src="js/script.js"></script> -->
-
-    <!-- <script
-      type="module"
-      defer
-      src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-    <script
-      nomodule
-      defer
-      src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script> -->
   </head>
   <body>
     <h1 class="heading-primary">WiseClock</h1>
@@ -70,25 +60,21 @@
         </p>
         <div class="modes__btns modes__stopwatch-btns">
           <button class="modes__btn modes__stopwatch-btn modes__btn--start modes__stopwatch-btn--start">
-            <!-- <ion-icon
-              name="play"
-              class="modes__icon modes__stopwatch-icon modes__icon--play modes__stopwatch-icon--play"></ion-icon> -->
-            <span class="modes__icon modes__stopwatch-icon modes__icon--play modes__stopwatch-icon--play">
-              ▶
-            </span>
-            <!-- <ion-icon
-              name="pause-outline"
-              class="modes__icon modes__stopwatch-icon modes__icon--pause modes__stopwatch-icon--pause hidden"></ion-icon> -->
-            <span class="modes__icon modes__stopwatch-icon modes__icon--pause modes__stopwatch-icon--pause hidden">
-              ⏸
-            </span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="modes__icon modes__stopwatch-icon modes__icon--play modes__stopwatch-icon--play" viewbox="0 0 512 512">
+              <!-- <title>Play</title> -->
+              <path d="M133 440a35.37 35.37 0 01-17.5-4.67c-12-6.8-19.46-20-19.46-34.33V111c0-14.37 7.46-27.53 19.46-34.33a35.13 35.13 0 0135.77.45l247.85 148.36a36 36 0 010 61l-247.89 148.4A35.5 35.5 0 01133 440z"></path>
+            </svg>
+            <svg xmlns="http://www.w3.org/2000/svg" class="modes__icon modes__stopwatch-icon modes__icon--pause modes__stopwatch-icon--pause hidden" viewbox="0 0 512 512">
+              <!-- <title>Pause</title> -->
+              <path d="M208 432h-48a16 16 0 01-16-16V96a16 16 0 0116-16h48a16 16 0 0116 16v320a16 16 0 01-16 16zM352 432h-48a16 16 0 01-16-16V96a16 16 0 0116-16h48a16 16 0 0116 16v320a16 16 0 01-16 16z"></path>
+            </svg>
           </button>
 
           <button class="modes__btn modes__stopwatch-btn modes__btn--stop modes__stopwatch-btn--stop">
-            <!-- <ion-icon
-              name="stop"
-              class="modes__icon modes__stopwatch-icon"></ion-icon> -->
-            <span class="modes__icon modes__stopwatch-icon"> ⏹ </span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="modes__icon modes__stopwatch-icon" viewbox="0 0 512 512">
+              <!-- <title>Stop</title> -->
+              <path d="M392 432H120a40 40 0 01-40-40V120a40 40 0 0140-40h272a40 40 0 0140 40v272a40 40 0 01-40 40z"></path>
+            </svg>
           </button>
         </div>
       </section>
@@ -107,30 +93,28 @@
             </div>
           </div>
 
-          <div class="modes__timer-time">
+          <div class="modes__timer-time hoverable">
             <span class="timer-time__hours">00</span>:<span class="timer-time__minutes">00</span>:<span class="timer-time__seconds">00</span>
           </div>
         </form>
 
         <div class="modes__btns modes__timer-btns">
           <button class="modes__btn modes__timer-btn modes__btn--start modes__timer-btn--start">
-            <!-- <ion-icon
-              name="play"
-              class="modes__icon modes__timer-icon modes__icon--play modes__timer-icon--play"></ion-icon> -->
-            <span class="modes__icon modes__timer-icon modes__icon--play modes__timer-icon--play">
-              ▶
-            </span>
-            <!-- <ion-icon
-              name="pause-outline"
-              class="modes__icon modes__timer-icon modes__icon--pause modes__timer-icon--pause hidden"></ion-icon> -->
-            <span class="modes__icon modes__timer-icon modes__icon--pause modes__timer-icon--pause hidden">
-              ⏸
-            </span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="modes__icon modes__timer-icon modes__icon--play modes__timer-icon--play" viewbox="0 0 512 512">
+              <!-- <title>Play</title> -->
+              <path d="M133 440a35.37 35.37 0 01-17.5-4.67c-12-6.8-19.46-20-19.46-34.33V111c0-14.37 7.46-27.53 19.46-34.33a35.13 35.13 0 0135.77.45l247.85 148.36a36 36 0 010 61l-247.89 148.4A35.5 35.5 0 01133 440z"></path>
+            </svg>
+            <svg xmlns="http://www.w3.org/2000/svg" class="modes__icon modes__timer-icon modes__icon--pause modes__timer-icon--pause hidden" viewbox="0 0 512 512">
+              <!-- <title>Pause</title> -->
+              <path d="M208 432h-48a16 16 0 01-16-16V96a16 16 0 0116-16h48a16 16 0 0116 16v320a16 16 0 01-16 16zM352 432h-48a16 16 0 01-16-16V96a16 16 0 0116-16h48a16 16 0 0116 16v320a16 16 0 01-16 16z"></path>
+            </svg>
           </button>
 
           <button class="modes__btn modes__timer-btn modes__btn--stop modes__timer-btn--stop">
-            <ion-icon name="stop" class="modes__icon modes__timer-icon"></ion-icon>
-            <span class="modes__icon modes__timer-icon"> ⏹ </span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="modes__icon modes__timer-icon" viewbox="0 0 512 512">
+              <!-- <title>Stop</title> -->
+              <path d="M392 432H120a40 40 0 01-40-40V120a40 40 0 0140-40h272a40 40 0 0140 40v272a40 40 0 01-40 40z"></path>
+            </svg>
           </button>
         </div>
       </section>
@@ -138,16 +122,30 @@
 
     <div class="btns">
       <button class="btns__btn btns__btn--clock btns__btn--active" data-mode="clock">
-        <!-- <ion-icon name="time-outline" class="btns__btn-icon"></ion-icon> -->
-        🕒
+        <span class="btns__btn-title transparent">Clock</span>
+        <svg xmlns="http://www.w3.org/2000/svg" class="btns__btn-icon" viewbox="0 0 512 512">
+          <!-- <title>Clock</title> -->
+          <path d="M256 64C150 64 64 150 64 256s86 192 192 192 192-86 192-192S362 64 256 64z" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="32"></path>
+          <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32" d="M256 128v144h96"></path>
+        </svg>
       </button>
       <button class="btns__btn btns__btn--stopwatch" data-mode="stopwatch">
-        <!-- <ion-icon name="stopwatch-outline" class="btns__btn-icon"></ion-icon> -->
-        ⏱
+        <span class="btns__btn-title transparent">Stopwatch</span>
+        <svg xmlns="http://www.w3.org/2000/svg" class="btns__btn-icon" viewbox="0 0 512 512">
+          <!-- <title>Stopwatch</title> -->
+          <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32" d="M256 232v-80"></path>
+          <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="48" d="M256 88V72M132 132l-12-12"></path>
+          <circle cx="256" cy="272" r="32" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="32"></circle>
+          <path d="M256 96a176 176 0 10176 176A176 176 0 00256 96z" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="32"></path>
+        </svg>
       </button>
       <button class="btns__btn btns__btn--timer" data-mode="timer">
-        <!-- <ion-icon name="timer-outline" class="btns__btn-icon"></ion-icon> -->
-        ⏲
+        <span class="btns__btn-title transparent">Timer</span>
+        <svg xmlns="http://www.w3.org/2000/svg" class="btns__btn-icon" viewbox="0 0 512 512">
+          <!-- <title>Timer</title> -->
+          <path d="M112.91 128A191.85 191.85 0 0064 254c-1.18 106.35 85.65 193.8 192 194 106.2.2 192-85.83 192-192 0-104.54-83.55-189.61-187.5-192a4.36 4.36 0 00-4.5 4.37V152" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"></path>
+          <path d="M233.38 278.63l-79-113a8.13 8.13 0 0111.32-11.32l113 79a32.5 32.5 0 01-37.25 53.26 33.21 33.21 0 01-8.07-7.94z"></path>
+        </svg>
       </button>
     </div>
   </body>

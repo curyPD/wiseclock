@@ -1,5 +1,5 @@
 import { calculateNewTime } from '../helpers';
-const textBtn = document.querySelector('.modes__timer-time');
+export const textBtn = document.querySelector('.modes__timer-time');
 const timerHrsEl = document.querySelector('.timer-time__hours');
 const timerMinsEl = document.querySelector('.timer-time__minutes');
 const timerSecsEl = document.querySelector('.timer-time__seconds');
@@ -58,7 +58,7 @@ export const addHandlerCheckInput = function () {
     const inputEl = e.target.closest('.form__input');
     if (!inputEl) return;
     const input = inputEl.value;
-    if (e.data === '+' || e.data === '-')
+    if (e.data === '+' || e.data === '-' || e.data === '.')
       inputEl.value = input.slice(0, input.length - 1);
     if (!Number.isFinite(+input)) {
       inputEl.value = '';

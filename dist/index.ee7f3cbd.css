@@ -34,7 +34,13 @@ body {
   display: none !important;
 }
 
-.no-focus, ion-icon {
+.no-focus {
+  pointer-events: none;
+}
+
+.transparent {
+  opacity: 0;
+  visibility: hidden;
   pointer-events: none;
 }
 
@@ -70,6 +76,7 @@ body {
   font-size: 3rem;
   transition: all .3s;
   display: flex;
+  position: relative;
 }
 
 .btns__btn:not(:last-child) {
@@ -80,22 +87,44 @@ body {
   background-color: var(--color-grey-light-2);
 }
 
+.btns__btn-title {
+  color: var(--color-grey-dark-1);
+  border: 1px solid var(--color-grey-dark-3);
+  pointer-events: none;
+  background-color: #fff;
+  border-radius: 3px;
+  padding: 4px;
+  font-size: 1.2rem;
+  transition: all .3s;
+  position: absolute;
+  top: 50%;
+  left: 110%;
+  transform: translate(0, -50%);
+}
+
 .btns__btn.btns__btn--active {
   background-color: var(--color-primary-light-2);
 }
 
 .btns__btn-icon {
+  width: 4.4rem;
+  height: 4.4rem;
   color: var(--color-grey-dark-2);
-  font-size: 4.4rem;
+  stroke: var(--color-grey-dark-2);
+  fill: var(--color-grey-dark-2);
   transition: all .2s;
 }
 
 .btns__btn:hover .btns__btn-icon {
   color: var(--color-grey-dark-1);
+  stroke: var(--color-grey-dark-1);
+  fill: var(--color-grey-dark-1);
 }
 
 .btns__btn.btns__btn--active .btns__btn-icon {
   color: var(--color-primary);
+  stroke: var(--color-primary);
+  fill: var(--color-primary);
 }
 
 .modes {
@@ -276,8 +305,10 @@ body {
 }
 
 .modes__icon {
-  color: var(--color-primary-light-1);
-  font-size: 3.2rem;
+  width: 3.2rem;
+  height: 3.2rem;
+  fill: var(--color-primary-light-1);
+  stroke: var(--color-primary-light-1);
   transition: all .2s;
 }
 
@@ -339,7 +370,7 @@ input[type="number"] {
 }
 
 .hoverable {
-  color: var(--color-grey-dark-3);
+  color: var(--color-grey-dark-2);
   cursor: pointer;
   transition: all .2s;
 }
